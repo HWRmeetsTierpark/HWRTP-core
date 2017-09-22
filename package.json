@@ -1,0 +1,23 @@
+{
+  "name": "hwrtp-core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HWRmeetsTierpark/HWRTP-core"
+  },
+  "keywords": [],
+  "author": "Miklas Boskamp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HWRmeetsTierpark/HWRTP-core/issues"
+  },
+  "homepage": "https://github.com/HWRmeetsTierpark/HWRTP-core#readme",
+  "dependencies": {
+    "ws": "^3.2.0"
+  }
+}

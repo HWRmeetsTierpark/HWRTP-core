@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/HWRmeetsTierpark/HWRTP-core#readme",
   "dependencies": {
+    "mongodb": "^2.2.31",
     "ws": "^3.2.0"
   }
 }

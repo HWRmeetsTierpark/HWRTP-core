@@ -15,3 +15,9 @@ db.getPic(testUser, function (result) {
 db.getRemainingTime(testUser, function (result) {
     console.log(`remainingTime - ${result}`);
 });
+
+db.addUser(123456789, function (err) {
+    if (err) {
+        console.log(err);
+    }
+});

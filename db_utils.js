@@ -18,7 +18,7 @@ function getAttribute(db, user, attribute, cb) {
 function getPic(user, cb) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
-        getAttribute(db, user, "pic", function (result) {
+        getAttribute(db, user, 'pic', function (result) {
             cb(result)
         });
     })
@@ -57,9 +57,7 @@ function substractRemainingTime(user, minutes) {
 function calculateRemainingTime(user) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
-        db.collection(userCollection).find({user: user}, {_id: 0, entryTime: 1}).toArray(function (err, dbResult) {
-            if (err) throw err;
-            db.close();
+        getAttribute(db, 'entryTime', function (dbResult) {
             substractRemainingTime(user, moment(new Date()).diff(dbResult[0].entryTime, 'minutes'))
         })
     })
@@ -68,10 +66,20 @@ function calculateRemainingTime(user) {
 function getRemainingTime(user, cb) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
-        getAttribute(db, user, "remainingTime", function (result) {
+        getAttribute(db, user, 'remainingTime', function (result) {
             cb(result)
         });
     })
 }
 
-module.exports = {getPic, setEntryTime, addRemainingTime, calculateRemainingTime, getRemainingTime};
+function addUser(id, cb) {
+    MongoClient.connect(mongoUrl, function (err, db) {
+        if (err) throw err;
+        db.collection(userCollection).insertOne({'user': id}, function (err) {
+            if (err) console.log(err);
+            if (typeof cb === 'function') cb(err)
+        })
+    })
+}
+
+module.exports = {getPic, setEntryTime, addRemainingTime, calculateRemainingTime, getRemainingTime, addUser};

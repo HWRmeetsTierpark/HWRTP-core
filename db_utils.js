@@ -25,7 +25,7 @@ db_utils.getPic = function(user, cb) {
             util.call(cb, result);
         });
     })
-}
+};
 
 db_utils.setEntryTime = function(user, time = new Date()) {
     MongoClient.connect(mongoUrl, function (err, db) {
@@ -35,7 +35,7 @@ db_utils.setEntryTime = function(user, time = new Date()) {
         });
         db.close();
     })
-}
+};
 
 db_utils.addRemainingTime = function(user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
@@ -45,7 +45,7 @@ db_utils.addRemainingTime = function(user, minutes) {
         });
         db.close();
     })
-}
+};
 
 db_utils.substractRemainingTime = function(user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
@@ -55,7 +55,7 @@ db_utils.substractRemainingTime = function(user, minutes) {
         });
         db.close();
     })
-}
+};
 
 db_utils.calculateRemainingTime = function(user){
     MongoClient.connect(mongoUrl, function (err, db) {
@@ -64,7 +64,7 @@ db_utils.calculateRemainingTime = function(user){
             substractRemainingTime(user, moment(new Date()).diff(dbResult[0].entryTime, 'minutes'))
         })
     })
-}
+};
 
 db_utils.getRemainingTime = function(user, cb){
     MongoClient.connect(mongoUrl, function (err, db) {
@@ -73,7 +73,7 @@ db_utils.getRemainingTime = function(user, cb){
             util.call(cb,result);
         });
     })
-}
+};
 
 db_utils.addUser = function(id, cb){
     MongoClient.connect(mongoUrl, function (err, db) {
@@ -83,6 +83,6 @@ db_utils.addUser = function(id, cb){
             util.call(cb, err);
         })
     })
-}
+};
 
 module.exports = db_utils;

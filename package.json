@@ -11,7 +11,7 @@
     "url": "git+https://github.com/HWRmeetsTierpark/HWRTP-core"
   },
   "keywords": [],
-  "author": "Miklas Boskamp",
+  "author": "Miklas Boskamp, Martin Böttcher, David Golla, Mattias Klassen, Fabaian Klose",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/HWRmeetsTierpark/HWRTP-core/issues"

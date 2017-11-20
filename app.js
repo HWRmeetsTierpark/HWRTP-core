@@ -1,3 +1,4 @@
+const socketServer = require('./socketServer');
 const WebSocketServer = require('ws').Server
     , wss = new WebSocketServer({host:"127.0.0.1", port:"8080"});
 const db = require('./db_utils');

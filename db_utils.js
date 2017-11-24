@@ -8,6 +8,13 @@ const moment = require('moment');
 
 var db_utils = {};
 
+/**
+ * returns the attributes value of an user
+ * @param db
+ * @param user
+ * @param attribute
+ * @param cb callback-function
+ */
 function getAttribute (db, user, attribute, cb) {
     const attributeQuery = {_id: 0};
     attributeQuery[attribute] = 1;
@@ -18,6 +25,11 @@ function getAttribute (db, user, attribute, cb) {
     })
 }
 
+/**
+ * returns the base64-coded picture of an user (not yet decided if a face or a fingerprint)
+ * @param user
+ * @param cb callback-function
+ */
 db_utils.getPic = function(user, cb) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
@@ -27,6 +39,11 @@ db_utils.getPic = function(user, cb) {
     })
 };
 
+/**
+ * sets the entry-time of an user
+ * @param user
+ * @param time default now (system-time)
+ */
 db_utils.setEntryTime = function(user, time = new Date()) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
@@ -37,6 +54,11 @@ db_utils.setEntryTime = function(user, time = new Date()) {
     })
 };
 
+/**
+ * adds remaining time to an user
+ * @param user
+ * @param minutes
+ */
 db_utils.addRemainingTime = function(user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
@@ -47,7 +69,12 @@ db_utils.addRemainingTime = function(user, minutes) {
     })
 };
 
-substractRemainingTime = function (user, minutes) {
+/**
+ * subtract remaining time of an user
+ * @param user
+ * @param minutes
+ */
+subtractRemainingTime = function (user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
         db.collection(userCollection).updateOne({user: user}, {
@@ -57,15 +84,24 @@ substractRemainingTime = function (user, minutes) {
     })
 };
 
+/**
+ * calculate remaining time after an user left
+ * @param user
+ */
 db_utils.calculateRemainingTime = function(user){
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
         getAttribute(db, 'entryTime', function (dbResult) {
-            substractRemainingTime(user, moment(new Date()).diff(dbResult[0].entryTime, 'minutes'))
+            subtractRemainingTime(user, moment(new Date()).diff(dbResult[0].entryTime, 'minutes'))
         })
     })
 };
 
+/**
+ * return remaining time
+ * @param user
+ * @param cb callback-function
+ */
 db_utils.getRemainingTime = function(user, cb){
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
@@ -75,6 +111,11 @@ db_utils.getRemainingTime = function(user, cb){
     })
 };
 
+/**
+ * inserts an user by id
+ * @param id
+ * @param cb callback-function
+ */
 db_utils.addUser = function(id, cb){
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;

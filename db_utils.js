@@ -47,7 +47,7 @@ db_utils.addRemainingTime = function(user, minutes) {
     })
 };
 
-db_utils.substractRemainingTime = function(user, minutes) {
+substractRemainingTime = function (user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
         db.collection(userCollection).updateOne({user: user}, {

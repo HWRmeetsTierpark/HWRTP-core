@@ -2,10 +2,10 @@ var util = {};
 
 util.call = function (callback, param) {
     if(typeof callback === "function"){
-        if(param != null){
-            callback(param);
+        if(param != null && param instanceof Array){
+                return callback.apply(this, param);
         }else{
-            callback();
+            return callback();
         }
     }
 };

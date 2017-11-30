@@ -9,7 +9,7 @@ const moment = require('moment');
 var db_utils = {};
 
 /**
- * returns the attributes value of an user
+ * returns the attributes value of a user
  * @param db
  * @param user
  * @param attribute
@@ -26,7 +26,7 @@ function getAttribute (db, user, attribute, cb) {
 }
 
 /**
- * returns the base64-coded picture of an user (not yet decided if a face or a fingerprint)
+ * returns the base64-coded picture of a user (not yet decided if a face or a fingerprint)
  * @param user
  * @param cb callback-function
  */
@@ -40,7 +40,7 @@ db_utils.getPic = function(user, cb) {
 };
 
 /**
- * sets the entry-time of an user
+ * sets the entry-time of a user
  * @param user
  * @param time default now (system-time)
  */
@@ -55,7 +55,7 @@ db_utils.setEntryTime = function(user, time = new Date()) {
 };
 
 /**
- * adds remaining time to an user
+ * adds remaining time to a user
  * @param user
  * @param minutes
  */
@@ -70,7 +70,7 @@ db_utils.addRemainingTime = function(user, minutes) {
 };
 
 /**
- * subtract remaining time of an user
+ * subtract remaining time of a user
  * @param user
  * @param minutes
  */
@@ -85,7 +85,7 @@ subtractRemainingTime = function (user, minutes) {
 };
 
 /**
- * calculate remaining time after an user left
+ * calculate remaining time after a user left
  * @param user
  */
 db_utils.calculateRemainingTime = function(user){
@@ -112,7 +112,7 @@ db_utils.getRemainingTime = function(user, cb){
 };
 
 /**
- * inserts an user by id
+ * inserts a user by id
  * @param id
  * @param cb callback-function
  */

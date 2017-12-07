@@ -4,11 +4,14 @@ util.errors = {
     callbackNotAFunction : new Error("Invalid Argument: callback is not a function")
 };
 
+util.const = {
+    minEntryTime : 30
+};
+
 util.call = function (callback, param) {
     if(typeof callback === "function"){
-        console.log(param);
-        if(param != null && param instanceof Array){
-                return callback.apply(this, param);
+        if(param != null){
+            return callback.call(this, param);
         }else{
             return callback();
         }

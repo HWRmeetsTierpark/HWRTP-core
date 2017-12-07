@@ -74,7 +74,7 @@ db_utils.addRemainingTime = function(user, minutes) {
  * @param user
  * @param minutes
  */
-subtractRemainingTime = function (user, minutes) {
+function subtractRemainingTime(user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
         db.collection(userCollection).updateOne({user: user}, {
@@ -91,10 +91,10 @@ subtractRemainingTime = function (user, minutes) {
 db_utils.calculateRemainingTime = function(user){
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
-        getAttribute(db, 'entryTime', function (dbResult) {
-            subtractRemainingTime(user, moment(new Date()).diff(dbResult[0].entryTime, 'minutes'))
-        })
-    })
+        getAttribute(db, user, 'entryTime', function (dbResult) {
+            subtractRemainingTime(user, moment(dbResult).diff(new Date(), 'minutes'))
+        });
+    });
 };
 
 /**
@@ -119,18 +119,20 @@ db_utils.getRemainingTime = function(user, cb){
 db_utils.addUser = function(id, cb){
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
-        db.collection(userCollection).insertOne({'user': id}, function (err) {
+        db.collection(userCollection).insertOne({'user': id, 'remainingTime' : 0}, function (err) {
             if (err) console.log(err);
             util.call(cb, err);
         })
     })
 };
 
-db_utils.getUser = function (id) {
+db_utils.getUser = function (id, cb) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
-        db.collection(userCollection).find({'user': id}).toArray(function (err, docs) {
-            console.log(docs);
+        return db.collection(userCollection).find({'user': id}).toArray(function (mongoError, dbResult) {
+            if (mongoError) throw mongoError;
+            db.close();
+            util.call(cb, dbResult[0]);
         });
     });
 };

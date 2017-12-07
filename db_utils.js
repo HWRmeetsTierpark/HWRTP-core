@@ -126,4 +126,13 @@ db_utils.addUser = function(id, cb){
     })
 };
 
+db_utils.getUser = function (id) {
+    MongoClient.connect(mongoUrl, function (err, db) {
+        if (err) throw err;
+        db.collection(userCollection).find({'user': id}).toArray(function (err, docs) {
+            console.log(docs);
+        });
+    });
+};
+
 module.exports = db_utils;

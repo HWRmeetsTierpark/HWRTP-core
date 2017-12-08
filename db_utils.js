@@ -78,7 +78,7 @@ function subtractRemainingTime(user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
         db.collection(userCollection).updateOne({user: user}, {
-            $inc: {remainingTime: -minutes}
+            $inc: {remainingTime: minutes * -1}
         });
         db.close();
     })
@@ -92,7 +92,8 @@ db_utils.calculateRemainingTime = function(user){
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
         getAttribute(db, user, 'entryTime', function (dbResult) {
-            subtractRemainingTime(user, moment(dbResult).diff(new Date(), 'minutes'))
+            console.log("User has spent " + moment(new Date()).diff(dbResult, 'minutes') + " minutes at Tierpark Berlin");
+            subtractRemainingTime(user, moment(new Date()).diff(dbResult, 'minutes'))
         });
     });
 };

@@ -55,6 +55,20 @@ db_utils.setEntryTime = function(user, time = new Date()) {
 };
 
 /**
+ * return remaining time
+ * @param user
+ * @param cb callback-function
+ */
+db_utils.getRemainingTime = function(user, cb){
+    MongoClient.connect(mongoUrl, function (err, db) {
+        if (err) throw err;
+        getAttribute(db, user, 'remainingTime', function (result) {
+            util.call(cb,result);
+        });
+    })
+};
+
+/**
  * adds remaining time to a user
  * @param user
  * @param minutes
@@ -77,10 +91,15 @@ db_utils.addRemainingTime = function(user, minutes) {
 function subtractRemainingTime(user, minutes) {
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
-        db.collection(userCollection).updateOne({user: user}, {
-            $inc: {remainingTime: minutes * -1}
-        });
-        db.close();
+	db_utils.getRemainingTime(user, function(currentRemainingTime) {
+		var newRemainingTime = currentRemainingTime + minutes * -1;
+	        db.collection(userCollection).updateOne({user: user}, {
+	            $set: {remainingTime: newRemainingTime}
+        	}, function (err) {
+			if (err) throw err;
+		});
+        	db.close();
+	});
     })
 }
 /**
@@ -97,20 +116,6 @@ db_utils.calculateRemainingTime = function(user){
             subtractRemainingTime(user, moment(new Date()).diff(dbResult, 'minutes'))
         });
     });
-};
-
-/**
- * return remaining time
- * @param user
- * @param cb callback-function
- */
-db_utils.getRemainingTime = function(user, cb){
-    MongoClient.connect(mongoUrl, function (err, db) {
-        if (err) throw err;
-        getAttribute(db, user, 'remainingTime', function (result) {
-            util.call(cb,result);
-        });
-    })
 };
 
 /**

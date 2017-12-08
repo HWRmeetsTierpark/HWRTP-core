@@ -29,7 +29,7 @@ function handleMessage(json){
                 console.log("entry: true");
                 if(result.remainingTime >= util.const.minEntryTime){
                     var date = new Date(0);
-                    date.setUTCSeconds(json.time);
+                    date.setUTCSeconds(json.time + 3600); //Fix for timezone error
                     db.setEntryTime(json.user, date);
                 }else{
                     console.log("not enough time")

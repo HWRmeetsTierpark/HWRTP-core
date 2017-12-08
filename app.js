@@ -2,7 +2,7 @@ const WebSocketServer = require('ws').Server;
 const db = require('./db_utils');
 const util = require('./util');
 
-var wss = new WebSocketServer({host:"localhost", port:"8080"}, function(){
+var wss = new WebSocketServer({host: "localhost", port: "9000"}, function () {
     console.log("Server started");
 });
 

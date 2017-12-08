@@ -82,8 +82,7 @@ function subtractRemainingTime(user, minutes) {
         });
         db.close();
     })
-};
-
+}
 /**
  * calculate remaining time after a user left
  * @param user
@@ -92,6 +91,8 @@ db_utils.calculateRemainingTime = function(user){
     MongoClient.connect(mongoUrl, function (err, db) {
         if (err) throw err;
         getAttribute(db, user, 'entryTime', function (dbResult) {
+            var entryDate = dbResult;
+            entryDate.setHours(entryDate.getHours() - 1);
             console.log("User has spent " + moment(new Date()).diff(dbResult, 'minutes') + " minutes at Tierpark Berlin");
             subtractRemainingTime(user, moment(new Date()).diff(dbResult, 'minutes'))
         });

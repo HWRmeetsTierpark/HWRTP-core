@@ -1,3 +1,7 @@
+/**
+ * some utils
+ */
+
 var util = {};
 
 util.errors = {
@@ -8,6 +12,12 @@ util.const = {
     minEntryTime : 30
 };
 
+/**
+ * checks if callback is function and call it
+ * @param callback
+ * @param param
+ * @returns {*}
+ */
 util.call = function (callback, param) {
     if(typeof callback === "function"){
         if(param != null){

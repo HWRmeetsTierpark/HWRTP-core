@@ -1,3 +1,7 @@
+/**
+ * some tests for database
+ */
+
 const db = require('./db_utils');
 
 const testUser = 77220630636;
